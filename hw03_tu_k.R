@@ -1,3 +1,8 @@
+# To Submit 
+# git add filename
+# git commit -m 'add a comment'
+# git push
+
 # This file contains homework questions for the lecture on 
 # Control Structures and Functions.  Questions appear as comments 
 # in the file.  Place your answers as executable code immediately 
