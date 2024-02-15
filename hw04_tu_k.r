@@ -1,3 +1,5 @@
+# emf - excellent work! Great answers and annotations.
+
 # Directions:
 
 # This file contains homework questions for the lecture on working with files
