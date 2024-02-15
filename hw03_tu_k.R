@@ -1,3 +1,5 @@
+#emf - great work! Overall you do a great job answering each question and annotating/translating the code!
+
 # To Submit 
 # git add filename
 # git commit -m 'add a comment'
