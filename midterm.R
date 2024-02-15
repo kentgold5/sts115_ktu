@@ -122,7 +122,7 @@ names(wine_revs)
 # "X"                     "country"               "description"           "designation"          
 #  "points"                "price"                 "province"              "region_1"             
 #  "region_2"              "taster_name"           "taster_twitter_handle" "title"                
-#  "variety"  
+#  "variety"              "winery" 
 
 
 # Question 11. Write code to load all observations from the
