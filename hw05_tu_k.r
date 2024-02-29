@@ -1,3 +1,5 @@
+# emf - excellent work! you can find comments below by searching for "emf"
+
 # Directions:
 
 # This file contains homework questions for the lecture on data forensics
@@ -163,6 +165,8 @@ range(cl$date_posted) # outputs "2021-01-30 09:44:09 UTC" "2021-03-04 13:00:48 U
 
 # The time period of the data goes from 1/3/2021 at 9:44 to 3/4/2021 at 13:00
 
+# emf - good!
+
 
 
 # 8. Compute the mean price for each pets category. Based on the means, are
@@ -195,6 +199,9 @@ prices_with_num = price_with_num_na[index_num_without_na]
 cat("Mean price of", i, ":", mean(prices_with_num), "\n")
 
 }
+
+# emf - a but hard to tell that you wrote a for loop here - try formatting it so that each new line of code is indented for readability. Can also simplify with something like:
+tapply(cl$price, cl$pets, mean, na.rm = TRUE)
 
 # Apartments that allow pets are not always more expensive. 
 # Apartments with no pets are more expensive than with cats.
