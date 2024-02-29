@@ -1,3 +1,5 @@
+# emf - excellent work!
+
 ################################################################
 # This file contains questions for the midterm exam for        #
 # IST008 Adventures in Data Science:  Social Science Edition,  #
