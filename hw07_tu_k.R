@@ -57,6 +57,7 @@ while (!is.na(url)) {
 
 
 
+
 # Part 2 Solution 
 # In a separate section below, write your own function called parse_article_links_corrected that fixes the problems in part 1
 # Only run the loop for the first 5 pages!!!
@@ -86,22 +87,22 @@ parse_article_links_and_next_page = function(page) {
 parse_article_links_corrected = function(url) {
   # empty list
   article_urls = list() 
-  
-  # only 5 pages
-  for (i in 1:5) {
-    
+  i = 1
+
     # pages past the last page are NA so do not include them
-    if (is.na(url)) {
-      break 
+    while (!is.na(url)){
+  
+    if (i == 6) { # stop the loop to display 5 pages
+      break
     }
-    
+
     # Download and parse the page.
     page = read_html(url)
     result = parse_article_links_and_next_page(page) # use above function to get article links and link to next page
   
     # Save the article URLs in the `article_urls` list. 
     article_urls[[i]] = result$url
-    i = i + 1
+    i = i + 1 
   
     # Set the URL to the next URL.
     url = result$next_url
