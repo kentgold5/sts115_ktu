@@ -118,4 +118,4 @@ return(article_urls) # return the list of article links
 parse_article_links_corrected("https://theaggie.org/category/features/page/1") # shows links for first five pages
 parse_article_links_corrected("https://theaggie.org/category/features/page/196") # shows links for last five pages
 parse_article_links_corrected("https://theaggie.org/category/features/page/198") # only shows links from the page number specified to the last page number
-parse_article_links_corrected("https://theaggie.org/category/features/page/200") # shows links for the page
+parse_article_links_corrected("https://theaggie.org/category/features/page/200") # shows links for the last page
