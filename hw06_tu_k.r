@@ -1,3 +1,5 @@
+# emf - good job! you can find comments below by searching for "emf"
+
 # Directions:
 
 # This file contains homework questions for the lecture on data visualization.
@@ -95,6 +97,8 @@ ggplot(dogs) + # data frame
 # There would be more confusion if the colored bars were stacked on top of each other as it would be 
 # difficult to count the number of dogs for a particular size and as a result, comparing would be difficult.
 
+# emf - good!  the bars in this plot have some variation in their widths based on how many size categories are included - is there a way to make these more uniform?
+
 
 # 3.
 #   a. Which geometry function makes a histogram? Use the ggplot2 website or
@@ -137,7 +141,7 @@ ggplot(dogs) + # data frame
   geom_point() + # scatter plot
   labs(title = "Relationship between Height and Weight of Dogs", x = "Height", y = "Weight") + # labels
   scale_shape_manual(values = c(16,17,15,3,7,8,11)) # manually setting the shapes. The numbers corresponding to the shapes in the legend
-
+# emf - good!
 
 #   b. Do height and weight effectively separate the different groups of dogs?
 #      In other words, are there clear boundaries between the groups in the
@@ -210,6 +214,9 @@ ggplot(dogs) + # data frame
 #       and suggest a few changes to improve the graphic.
 
 # What makes this a "bad" visualization is that the bar colors do not correspond to the shoe color in the x axis.
+
+#emf - could engage more with the visualization principles and perception rules discussed in class 
+
 # Adding a more specific title like shoe color frequency from who or what group of people would help with context.
 # Adding textures in the bars would help those who are colorblind.
 # Adding a y axis label would help with specificity. 
@@ -255,4 +262,5 @@ ggplot(dogs) + # data frame
   scale_shape_manual(values = c(16,17,15,3,7,8,11)) + # manually sets the shape for each group of dogs
   theme_minimal() # removes unnecessary gray background elements
 
+# emf - great!
 
