@@ -1,3 +1,5 @@
+# emf - good job! see comments below
+
 # Directions:
 
 # This file contains homework questions for the lecture on data visualization.
@@ -91,7 +93,7 @@ vector = words[[1]] # index to get the vector of words
 vector
 str_detect(vector, "hello") # detects whether "hello" appears within the string
 
-
+# emf - good! do you think you can do this in fewer lines?
 
 
 
