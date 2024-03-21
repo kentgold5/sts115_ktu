@@ -25,7 +25,20 @@ QUESTION 1 (10 Points): The variable `events`, defined below, contains the dates
 
 events = c("Thu Apr-11 in 1968", "Tue May-8 in 1945", "Sun Dec-23 in 1900")
 
+library(lubridate)
 
+class(events) # character class
+
+# Define the format of the dates
+date_format <- "%a %b-%d in %Y"
+
+# Convert each date string to a Date object
+converted_dates <- as.Date(events, format = date_format)
+
+# Print the converted dates
+print(converted_dates)
+
+class(converted_dates) # date class
 ```
 
 
@@ -67,7 +80,39 @@ Super giant .......... 17.99
 Chimichanga ......... 9.99
 Beans, rice & cheese .... 4.99"
 
+library(stringr)
 
+# Split the menu string into individual lines
+menu_lines <- strsplit(menu, "\n")[[1]]
+
+# Initialize empty vectors to store type and price
+types <- c()
+prices <- c()
+
+for (line in menu_lines) {
+  # Skip the header line
+  if (grepl("^BURRITOS$", line)) {
+    next
+  }
+  
+  # Use regular expression to extract type and price
+  match <- regmatches(line, regexpr("\\.{3,}\\s+\\d+\\.?\\d*", line))
+  if (length(match) == 0) {
+    next
+  }
+  type <- gsub("\\.{3,}\\s+\\d+\\.?\\d*", "", line)
+  price <- as.numeric(gsub("\\.{3,}|\\s", "", match))
+  
+  # Append type and price to vectors
+  types <- c(types, type)
+  prices <- c(prices, price)
+}
+
+# Create a data frame with type and price
+burritos <- data.frame(type = types, price = prices)
+
+# Print the data frame
+print(burritos)
 
 ```
 
@@ -75,6 +120,39 @@ QUESTION 3 (20 Points): Use the Cat Facts API documentation at https://alexwohlb
 
 ```{r}
 # Answer Question 3 in this code chunk:
+
+library(httr)
+
+# Base URL for all endpoints
+base_url <- "https://cat-fact.herokuapp.com"
+
+# Endpoint for retrieving facts
+endpoint <- "/facts/random?animal_type=cat&amount=1"
+
+# Loop to retrieve 5 cat facts
+counter <- 0
+while (counter < 5) {
+  # Construct the complete URL
+  url <- paste0(base_url, endpoint)
+  
+  # Make a GET request to retrieve the data
+  response <- GET(url)
+  
+  # Check if the request was successful
+  if (status_code(response) == 200) {
+    # Extract the JSON content from the response
+    fact <- content(response, as = "parsed")
+    
+    # Check if the fact contains the word "cat"
+    if (grepl("\\bcat\\b", fact$text, ignore.case = TRUE)) {
+      counter <- counter + 1
+      # Print the fact
+      cat("Cat Fact", counter, ":", fact$text, "\n\n")
+    }
+  } else {
+    cat("Error:", status_code(response), "\n")
+  }
+}
 
 
 ```
@@ -90,6 +168,36 @@ You DO NOT need to worry about cleaning up the text to remove footnotes, parenth
 ```{r}
 # Answer Question 4 in this code chunk:
 
+library(xml2)
+library(rvest)
+
+# URL of the Wikipedia page
+url <- "https://en.wikipedia.org/wiki/List_of_female_Nobel_laureates"
+
+# Read the HTML content of the page
+page <- read_html(url)
+
+# the info we are looking for is in a table
+# so let's extract the table
+tables = xml_find_all(page, "//table")
+
+# look at it
+# class(tables)
+# str(tables)
+# tables
+
+# Filter out the table(s) with the class "wikitable"
+tab = xml_find_all(tables, "//*[contains(@class, 'wikitable')]")
+# class(tab)
+# str(tab)
+# tab
+
+# Extract the table containing the female Nobel Laureates
+table = html_table(tab, fill = TRUE)
+table = table[[1]]
+
+# Assuming the relevant columns are Year, Name, Country, and Category
+female_laureates <- table[,c(2,4,5, 7)]
 
 ```
 
@@ -107,6 +215,43 @@ d. How many missing values are in the data set in total? (5 Points)
 # Question 5.  Narrative answers to the question can present
 # here as comments or in the narrative answer block below
 
+# read rds file
+nobel_laureates = readRDS("~/sts115_ktu/sts115_wq2024_final_exam/nobel_laureates.rds")
+
+# a. 
+rows <- nrow(nobel_laureates)
+cols <- ncol(nobel_laureates)
+
+# Print the number of rows and columns
+print(paste("Number of rows:", rows))
+print(paste("Number of columns:", cols))
+
+# b. 
+# Get the names and classes of columns
+col_names <- names(nobel_laureates)
+col_classes <- sapply(nobel_laureates, class)
+
+# Print the names and classes of columns
+print("Column names:")
+print(col_names)
+print("Column classes:")
+print(col_classes)
+
+# c.
+# Calculate the number of missing values in each column
+missing_values <- colSums(is.na(nobel_laureates))
+
+# Print the number of missing values in each column
+print("Missing values in each column:")
+print(missing_values)
+
+
+# d. 
+# Calculate the total number of missing values in the data set
+total_missing <- sum(missing_values)
+
+# Print the total number of missing values in the data set
+print(paste("Total missing values in the data set:", total_missing))
 
 ```
 
@@ -134,6 +279,30 @@ you will accomplish this iteration.
 ```{r}
 # Answer Question 6 in this code chunk:
 
+# Load the data frame from the RDS file
+nobel_laureates_messy = readRDS("~/sts115_ktu/sts115_wq2024_final_exam/nobel_laureates_messy.rds")
+
+
+# Initialize the Note column
+nobel_laureates_messy$Note <- NA
+
+# Define a regular expression pattern to match text within parentheses
+pattern <- "\\((.*?)\\)"
+
+# Iterate through each row to extract the note and update the Laureate column
+for (i in 1:nrow(nobel_laureates_messy)) {
+  # Extract the note using regex
+  note <- regmatches(nobel_laureates_messy$Laureate[i], regexec(pattern, nobel_laureates_messy$Laureate[i]))[[1]][2]
+  
+  # Remove the note from the Laureate column
+  nobel_laureates_messy$Laureate[i] <- gsub(pattern, "", nobel_laureates_messy$Laureate[i])
+  
+  # Update the Note column
+  nobel_laureates_messy$Note[i] <- ifelse(note == "", NA, note)
+}
+
+# view the top of the updated data frame
+head(nobel_laureates_messy)
 
 ```
 
